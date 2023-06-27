@@ -1,0 +1,8 @@
+venv
+
+## Directory-based project format
+.idea/
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
