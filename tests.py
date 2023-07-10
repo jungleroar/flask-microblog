@@ -7,7 +7,8 @@ from app.models import User, Post
 class UserModelCase(unittest.TestCase):
     def setUp(self):
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
-        db.create_all()
+        with app.app_context():
+            db.create_all()
 
     def tearDown(self):
         db.session.remove()
@@ -88,4 +89,5 @@ class UserModelCase(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    app.app_context().push()
     unittest.main(verbosity=2)
