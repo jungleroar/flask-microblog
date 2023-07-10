@@ -19,7 +19,7 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('Register')
 
     # WTForms вызывает методы, начинающиеся на validate_ автоматически при вооде данных в поля
-    
+
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
@@ -48,16 +48,6 @@ class EditProfileForm(FlaskForm):
                 raise ValidationError('Такой юзернейм уже зарегистрирован.')
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+class PostForm(FlaskForm):
+    post = TextAreaField('Что у вас нового?', validators=[DataRequired(), Length(min=1, max=140)])
+    submit = SubmitField('Отправить')
