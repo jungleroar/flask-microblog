@@ -51,3 +51,24 @@ class EditProfileForm(FlaskForm):
 class PostForm(FlaskForm):
     post = TextAreaField('Что у вас нового?', validators=[DataRequired(), Length(min=1, max=140)])
     submit = SubmitField('Отправить')
+
+
+class ResetPasswordRequestForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Сбросить пароль')
+
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Введите пароль', validators=[DataRequired()])
+    password2 = PasswordField('Повторите пароль', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Сбросить пароль')
+
+
+
+
+
+
+
+
+
+

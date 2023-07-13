@@ -19,4 +19,4 @@ class Config(object):
     ADMINS = ['donnydeus@gmail.com']
 
     # Сколько постов отображается на одной странице
-    POSTS_PER_PAGE = 3
+    POSTS_PER_PAGE = 10
