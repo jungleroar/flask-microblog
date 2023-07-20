@@ -7,6 +7,7 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
+from flask_bootstrap import Bootstrap
 
 from config import Config
 
@@ -15,7 +16,10 @@ app.config.from_object(Config)
 db = SQLAlchemy(app=app)
 migrate = Migrate(app=app, db=db)
 login = LoginManager(app=app)
+# login.login_view = 'login'
+# login.login_message = "Пожалуйста, войдите, чтобы открыть эту страницу."
 mail = Mail(app)
+bootstrap = Bootstrap(app)
 
 login.login_view = 'login'
 
