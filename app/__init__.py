@@ -3,12 +3,16 @@ import os
 from logging.handlers import RotatingFileHandler, SMTPHandler
 
 from flask import Flask
+from flask import request
+from flask_babel import Babel
+from flask_babel import lazy_gettext as _l
+from flask_babel import gettext as _
+from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
+from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
-from flask_mail import Mail
-from flask_bootstrap import Bootstrap
 
 from config import Config
 
@@ -17,13 +21,21 @@ app.config.from_object(Config)
 db = SQLAlchemy(app=app)
 migrate = Migrate(app=app, db=db)
 login = LoginManager(app=app)
-# login.login_view = 'login'
-# login.login_message = "Пожалуйста, войдите, чтобы открыть эту страницу."
 mail = Mail(app)
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 
 login.login_view = 'login'
+login.login_message = _l('Please log in to access this page.')
+
+
+def get_locale():
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
+
+
+babel = Babel(app, locale_selector=get_locale)
+
+
 
 from app import routes, models, errors
 

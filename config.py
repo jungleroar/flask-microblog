@@ -17,6 +17,7 @@ class Config(object):
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     ADMINS = ['donnydeus@gmail.com']
+    LANGUAGES = ['ru', 'en', 'es']
 
     # Сколько постов отображается на одной странице
     POSTS_PER_PAGE = 10

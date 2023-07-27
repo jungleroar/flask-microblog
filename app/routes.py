@@ -3,6 +3,8 @@ from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
+from flask import g
+from flask_babel import get_locale
 
 from app import app, db
 from app.email import send_password_reset_email
@@ -13,6 +15,7 @@ from app.models import User, Post
 
 @app.before_request
 def before_request():
+    g.locale = str(get_locale())
     if current_user.is_authenticated:
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
