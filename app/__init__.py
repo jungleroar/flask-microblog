@@ -6,7 +6,6 @@ from flask import Flask
 from flask import request
 from flask_babel import Babel
 from flask_babel import lazy_gettext as _l
-from flask_babel import gettext as _
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
 from flask_mail import Mail
@@ -35,9 +34,12 @@ def get_locale():
 
 babel = Babel(app, locale_selector=get_locale)
 
+from app.errors import bp as errors_bp
+from app import routes, models
+from app.auth import bp as auth_bp
 
-
-from app import routes, models, errors
+app.register_blueprint(auth_bp, url_prefix='/auth')
+app.register_blueprint(errors_bp)
 
 if not app.debug:
 
