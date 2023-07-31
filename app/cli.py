@@ -2,7 +2,9 @@ import os
 
 import click
 
-from app import app
+from app import create_app
+
+app = create_app()
 
 
 @app.cli.group()

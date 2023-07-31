@@ -4,12 +4,6 @@
 {% if title %}{{ title }} - Microblog{% else %}{{ 'Welcome to Microblog' }}{% endif %}
 {% endblock %}
 
-{% block scripts %}
-    {{ super() }}
-    {{ moment.include_moment() }}
-<!--    {{ moment.lang(g.locale) }}-->
-    {{ moment.lang('ru') }}
-{% endblock %}
 
 {% block navbar %}
 <nav class="navbar navbar-default">
@@ -59,3 +53,9 @@
 </div>
 {% endblock %}
 
+{% block scripts %}
+    {{ super() }}
+    {{ moment.include_moment() }}
+<!--    {{ moment.lang(g.locale) }}-->
+    {{ moment.lang('ru') }}
+{% endblock %}

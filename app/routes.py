@@ -6,9 +6,11 @@ from flask_babel import get_locale
 from flask_login import current_user, login_required
 from guess_language import guess_language
 
-from app import app, db
+from app import create_app, db
 from app.forms import EditProfileForm, PostForm
 from app.models import User, Post
+
+app = create_app()
 
 
 @app.before_request
