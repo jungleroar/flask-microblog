@@ -3,7 +3,6 @@ import os
 from logging.handlers import RotatingFileHandler, SMTPHandler
 
 from flask import Flask
-from flask import request
 from flask_babel import Babel
 from flask_babel import lazy_gettext as _l
 from flask_bootstrap import Bootstrap
@@ -88,4 +87,5 @@ def create_app(config_class=Config):
 # babel = Babel(locale_selector=get_locale)
 
 
-from app import routes, models
+from app import models
+# from app.main import routes

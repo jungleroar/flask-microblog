@@ -1,19 +1,18 @@
 from datetime import datetime
 
 from flask import g
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, current_app
 from flask_babel import get_locale
 from flask_login import current_user, login_required
 from guess_language import guess_language
 
-from app import create_app, db
-from app.forms import EditProfileForm, PostForm
+from app import db
+from app.main.forms import EditProfileForm, PostForm
 from app.models import User, Post
+from app.main import bp
 
-app = create_app()
 
-
-@app.before_request
+@bp.before_request
 def before_request():
     g.locale = str(get_locale())
     if current_user.is_authenticated:
@@ -21,8 +20,8 @@ def before_request():
         db.session.commit()
 
 
-@app.route('/', methods=['GET', 'POST'])
-@app.route('/index', methods=['GET', 'POST'])
+@bp.route('/', methods=['GET', 'POST'])
+@bp.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
     form = PostForm()
@@ -36,20 +35,20 @@ def index():
         flash('Ваш пост опубликован!')
         return redirect(url_for('index'))
     page = request.args.get('page', 1, type=int)
-    posts = current_user.followed_posts().paginate(page=page, per_page=app.config['POSTS_PER_PAGE'], error_out=False)
+    posts = current_user.followed_posts().paginate(page=page, per_page=current_app.config['POSTS_PER_PAGE'], error_out=False)
     next_url = url_for('index', page=posts.next_num) if posts.has_next else None
     prev_url = url_for('index', page=posts.prev_num) if posts.has_prev else None
     return render_template('index.html', title='Главная', form=form, posts=posts.items, next_url=next_url,
                            prev_url=prev_url)
 
 
-@app.route('/user/<username>')
+@bp.route('/user/<username>')
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     page = request.args.get('page', 1, type=int)
     posts = user.posts.order_by(Post.timestamp.desc()).paginate(page=page,
-                                                                per_page=app.config['POSTS_PER_PAGE'],
+                                                                per_page=current_app.config['POSTS_PER_PAGE'],
                                                                 error_out=False)
     next_url = url_for('user', username=user.username, page=posts.next_num) \
         if posts.has_next else None
@@ -59,7 +58,7 @@ def user(username):
                            next_url=next_url, prev_url=prev_url)
 
 
-@app.route('/edit_profile', methods=['GET', 'POST'])
+@bp.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
     form = EditProfileForm(original_username=current_user.username)
@@ -75,7 +74,7 @@ def edit_profile():
     return render_template('edit_profile.html', title='Edit Profile', form=form)
 
 
-@app.route('/follow/<username>')
+@bp.route('/follow/<username>')
 @login_required
 def follow(username):
     user = User.query.filter_by(username=username).first()
@@ -91,7 +90,7 @@ def follow(username):
     return redirect(url_for('index', username=username))
 
 
-@app.route('/unfollow/<username>')
+@bp.route('/unfollow/<username>')
 @login_required
 def unfollow(username):
     user = User.query.filter_by(username=username).first()
@@ -107,12 +106,12 @@ def unfollow(username):
     return redirect(url_for('user', username=username))
 
 
-@app.route('/explore')
+@bp.route('/explore')
 @login_required
 def explore():
     page = request.args.get('page', 1, type=int)
     posts = Post.query.order_by(Post.timestamp.desc()).paginate(
-        page=page, per_page=app.config['POSTS_PER_PAGE'], error_out=False)
+        page=page, per_page=current_app.config['POSTS_PER_PAGE'], error_out=False)
     next_url = url_for('explore', page=posts.next_num) \
         if posts.has_next else None
     prev_url = url_for('explore', page=posts.prev_num) \

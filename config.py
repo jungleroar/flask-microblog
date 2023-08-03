@@ -16,7 +16,7 @@ class Config(object):
     MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') is not None
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    ADMINS = ['donnydeus@gmail.com']
+    ADMINS = []  # добавить емейл
     LANGUAGES = ['ru', 'en', 'es']
 
     # Сколько постов отображается на одной странице
