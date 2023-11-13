@@ -25,3 +25,9 @@ class EditProfileForm(FlaskForm):
 class PostForm(FlaskForm):
     post = TextAreaField('Что у вас нового?', validators=[DataRequired(), Length(min=1, max=140)])
     submit = SubmitField('Отправить')
+
+
+class MessageForm(FlaskForm):
+    message = TextAreaField('Сообщение', validators=[
+        DataRequired(), Length(min=0, max=140)])
+    submit = SubmitField('Отправить')

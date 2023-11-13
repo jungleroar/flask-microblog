@@ -11,4 +11,7 @@ __pycache__/
 
 app.db
 logs
+*.log
 messages.pot
+
+migrations
