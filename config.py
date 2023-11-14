@@ -12,6 +12,7 @@ class Config(object):
         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
+    REDIS_URL = os.environ.get('REDIS_URL') or 'redis://'
 
     # настройка почты для отправки ошибок
     MAIL_SERVER = os.environ.get('MAIL_SERVER')
