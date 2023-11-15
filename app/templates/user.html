@@ -18,6 +18,7 @@
         <p>
           <a href="{{ url_for('main.edit_profile') }}">Редактировать профиль</a>
         </p>
+
         {% elif not current_user.is_following(user) %}
         <p>
           <a href="{{ url_for('main.follow', username=user.username) }}"
@@ -31,6 +32,14 @@
           >
         </p>
         {% endif %}
+
+          {% if not current_user.get_task_in_progress('export_posts') %}
+            <p>
+                <a href="{{ url_for('main.export_posts') }}">
+                    {{ _('Export your posts') }}
+                </a>
+            </p>
+           {% endif %}
 
         {% if user != current_user %}
             <p>

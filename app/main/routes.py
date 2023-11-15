@@ -7,9 +7,9 @@ from flask_login import current_user, login_required
 from guess_language import guess_language
 
 from app import db
+from app.main import bp
 from app.main.forms import EditProfileForm, PostForm, MessageForm
 from app.models import User, Post, Message, Notification
-from app.main import bp
 
 
 @bp.before_request
@@ -35,7 +35,8 @@ def index():
         flash('Ваш пост опубликован!')
         return redirect(url_for('main.index'))
     page = request.args.get('page', 1, type=int)
-    posts = current_user.followed_posts().paginate(page=page, per_page=current_app.config['POSTS_PER_PAGE'], error_out=False)
+    posts = current_user.followed_posts().paginate(page=page, per_page=current_app.config['POSTS_PER_PAGE'],
+                                                   error_out=False)
     next_url = url_for('main.index', page=posts.next_num) if posts.has_next else None
     prev_url = url_for('main.index', page=posts.prev_num) if posts.has_prev else None
     return render_template('index.html', title='Главная', form=form, posts=posts.items, next_url=next_url,
@@ -153,7 +154,7 @@ def messages():
     page = request.args.get('page', 1, type=int)
     messages = current_user.messages_received.order_by(
         Message.timestamp.desc()).paginate(
-            page=page, per_page=current_app.config['POSTS_PER_PAGE'], error_out=False)
+        page=page, per_page=current_app.config['POSTS_PER_PAGE'], error_out=False)
     next_url = url_for('main.messages', page=messages.next_num) \
         if messages.has_next else None
     prev_url = url_for('main.messages', page=messages.prev_num) \
@@ -173,3 +174,14 @@ def notifications():
         'data': n.get_data(),
         'timestamp': n.timestamp
     } for n in notifications])
+
+
+@bp.route('/export_posts')
+@login_required
+def export_posts():
+    if current_user.get_task_in_progress('export_posts'):
+        flash('An export task is currently in progress')
+    else:
+        current_user.launch_task('export_posts', 'Экспорт записей...')
+        db.session.commit()
+    return redirect(url_for('main.user', username=current_user.username))
