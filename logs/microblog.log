@@ -80,3 +80,16 @@ Traceback (most recent call last):
   File "/usr/lib/python3.10/socket.py", line 833, in create_connection
     sock.connect(sa)
 ConnectionRefusedError: [Errno 111] Connection refused
+2023-11-16 20:24:50,267 INFO: Microblog startup [in /home/jungleroar/PycharmProjects/microblog/app/__init__.py:92]
+2023-11-16 20:24:51,266 INFO: Microblog startup [in /home/jungleroar/PycharmProjects/microblog/app/__init__.py:92]
+2023-11-16 20:55:05,354 INFO: Microblog startup [in /home/jungleroar/PycharmProjects/microblog/app/__init__.py:92]
+2023-11-16 20:55:06,245 INFO: Microblog startup [in /home/jungleroar/PycharmProjects/microblog/app/__init__.py:92]
+2023-11-16 21:00:55,472 INFO: Microblog startup [in /home/jungleroar/PycharmProjects/microblog/app/__init__.py:92]
+2023-11-16 21:00:56,474 INFO: Microblog startup [in /home/jungleroar/PycharmProjects/microblog/app/__init__.py:92]
+2023-11-16 21:10:40,697 INFO: Microblog startup [in /home/jungleroar/PycharmProjects/microblog/app/__init__.py:92]
+2023-11-16 21:11:17,999 INFO: Microblog startup [in /home/jungleroar/PycharmProjects/microblog/app/__init__.py:92]
+2023-11-16 21:15:43,934 INFO: Microblog startup [in /home/jungleroar/PycharmProjects/microblog/app/__init__.py:92]
+2023-11-16 21:18:35,211 INFO: Microblog startup [in /home/jungleroar/PycharmProjects/microblog/app/__init__.py:92]
+2023-11-16 21:20:52,684 INFO: Microblog startup [in /home/jungleroar/PycharmProjects/microblog/app/__init__.py:92]
+2023-11-16 21:23:19,778 INFO: Microblog startup [in /home/jungleroar/PycharmProjects/microblog/app/__init__.py:92]
+2023-11-16 21:36:08,787 INFO: Microblog startup [in /home/jungleroar/PycharmProjects/microblog/app/__init__.py:92]
